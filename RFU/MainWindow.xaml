@@ -1,0 +1,34 @@
+﻿<Window x:Class="RFU.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RFU"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        Title="MainWindow" Height="360" Width="400">
+
+    <Grid>
+        <Grid Background="#065A82">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Frame Grid.Row="1" Name="Frame0" NavigationUIVisibility="Hidden"/>
+        </Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button Content="⌂" Name="MenuBtn" Click="MenuBtn_Click" Style="{StaticResource ButtonStyleWhite}" Width="30"/>
+            <Button Content="🎮" Name="GameBtn0" Click="GameBtn0_Click" Style="{StaticResource ButtonStyleWhite}" Width="30"/>
+            <Button Content="⛭" Name="SettingsBtn" Grid.Row="1" Click="SettingsBtn_Click" Style="{StaticResource ButtonStyleWhite}" Width="30"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button Content="—" x:Name="MinimBtn" Click="MinimBtn_Click" Style="{StaticResource CloseButtonStyleWhite}" Width="35" Height="25" Grid.Column="1" FontSize="16"/>
+            <Button Content="✕" x:Name="CloseBtn" Click="CloseBtn_Click" Style="{StaticResource CloseButtonStyleWhite}" Width="35" Height="25" Grid.Column="1" FontSize="16"/>
+        </StackPanel>
+    </Grid>
+</Window>

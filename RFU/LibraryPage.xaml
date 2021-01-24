@@ -1,0 +1,21 @@
+﻿<Page x:Class="RFU.LibraryPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RFU"
+      mc:Ignorable="d" 
+      d:DesignHeight="335" d:DesignWidth="400"
+      Title="LibraryPage">
+
+    <Grid>
+        <WrapPanel>
+            <Button Style="{StaticResource ButtonStyleWhiteWithBackground}" Height="Auto" Margin="5" Click="RandomFightsBtn_Click">
+                <StackPanel>
+                    <Image Height="70" Margin="5,5,5,0"/>
+                    <TextBlock Text="Game Name" Foreground="White" Margin="5,0,5,5" Name="GameNameTextBox"/>
+                </StackPanel>
+            </Button>
+        </WrapPanel>
+    </Grid>
+</Page>
