@@ -26,6 +26,7 @@ namespace RFU
         string Language;
         string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\RFUpdater\settings.dat";
         bool AutoUpdate;
+        DirectoryInfo FolderPathDirectory;
 
         public GamePage(string gameName, Version gameVersion, string gamePath, string gameUpdateUrl, int gameStatus, string language, bool autoUpdate, string gameFolderPath)
         {
@@ -42,6 +43,7 @@ namespace RFU
             GameFolderPath = gameFolderPath;
             FolderPath = gameFolderPath + GameName;
             FolderPath = FolderPath.Replace(' ', '_');
+            FolderPathDirectory = new DirectoryInfo(FolderPath);
             ProgressBar0.Visibility = Visibility.Hidden;
             DownSpeedTextBlock.Visibility = Visibility.Hidden;
             if (GameStatus == 0)
@@ -95,9 +97,9 @@ namespace RFU
         void Installing()
         {
             WebClient WebClient = new WebClient();
-            if (!Directory.Exists(FolderPath))
+            if (!FolderPathDirectory.Exists)
             {
-                Directory.CreateDirectory(FolderPath);
+                FolderPathDirectory.Create();
             }
             ZipPath = FolderPath + @"\RandomFights.zip";
             GamePath = FolderPath + @"\" + GameVersion + @"\RandomFights.exe";
@@ -153,14 +155,14 @@ namespace RFU
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (File.Exists(GamePath))
+            if (FolderPathDirectory.Exists)
             {
-                File.Delete(FolderPath);
+                FolderPathDirectory.Delete(true);
                 DeleteGame();
             }
             else
             {
-                DeleteGame();
+
             }
         }
         void DeleteGame()
