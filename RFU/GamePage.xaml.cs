@@ -40,6 +40,8 @@ namespace RFU
             Language = language;
             AutoUpdate = autoUpdate;
             GameFolderPath = gameFolderPath;
+            FolderPath = gameFolderPath + GameName;
+            FolderPath = FolderPath.Replace(' ', '_');
             ProgressBar0.Visibility = Visibility.Hidden;
             DownSpeedTextBlock.Visibility = Visibility.Hidden;
             if (GameStatus == 0)
@@ -93,8 +95,6 @@ namespace RFU
         void Installing()
         {
             WebClient WebClient = new WebClient();
-            FolderPath = GameFolderPath + GameName;
-            FolderPath = FolderPath.Replace(' ', '_');
             if (!Directory.Exists(FolderPath))
             {
                 Directory.CreateDirectory(FolderPath);
@@ -145,7 +145,7 @@ namespace RFU
                 BinaryWriter.Write(GamePath);
                 BinaryWriter.Write(GameStatus);
                 BinaryWriter.Write(AutoUpdate);
-                BinaryWriter.Write(FolderPath);
+                BinaryWriter.Write(GameFolderPath);
                 BinaryWriter.Dispose();
             }
         }
