@@ -52,7 +52,7 @@
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="5"/>
             <Setter Property="Height" Value="25"/>
-            <Setter Property="Foreground" Value="#076D9C"/>
+            <Setter Property="Foreground" Value="#21749B"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>

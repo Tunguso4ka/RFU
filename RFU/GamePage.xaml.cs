@@ -145,7 +145,7 @@ namespace RFU
                 BinaryWriter.Write(GamePath);
                 BinaryWriter.Write(GameStatus);
                 BinaryWriter.Write(AutoUpdate);
-                BinaryWriter.Write(GameFolderPath);
+                BinaryWriter.Write(FolderPath);
                 BinaryWriter.Dispose();
             }
         }
@@ -155,7 +155,7 @@ namespace RFU
         {
             if (File.Exists(GamePath))
             {
-                File.Delete(GameFolderPath);
+                File.Delete(FolderPath);
                 DeleteGame();
             }
             else

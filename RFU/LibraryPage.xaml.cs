@@ -23,6 +23,7 @@ namespace RFU
         string GameName;
 
         public GamePage RandomFightsPage;
+        Uri ImageSource;
         public LibraryPage(string gameName)
         {
             InitializeComponent();

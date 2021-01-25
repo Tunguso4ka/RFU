@@ -8,7 +8,7 @@
       d:DesignHeight="520" d:DesignWidth="500"
       Title="StartPage">
 
-    <Grid Background="#065275">
+    <Grid Background="#185572">
         <ScrollViewer>
             <StackPanel Margin="5,5,5,5">
                 <TextBlock Text="Good day!" Style="{StaticResource GPTextBlockWhite}" Name="GDTextBlock"/>
