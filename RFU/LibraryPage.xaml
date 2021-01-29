@@ -8,12 +8,12 @@
       d:DesignHeight="335" d:DesignWidth="400"
       Title="LibraryPage">
 
-    <Grid Background="#185572">
+    <Grid>
         <StackPanel>
             <WrapPanel>
                 <Button Style="{StaticResource ButtonStyleWhiteWithBackground}" Height="Auto" Margin="5" Click="RandomFightsBtn_Click">
                     <StackPanel>
-                        <Image Height="70" Margin="5,5,5,0" Source="{Binding ImageSource}"/>
+                        <Image Height="70" Margin="5,5,5,0" Name="GameImageImage"/>
                         <TextBlock Text="Game Name" Foreground="White" Margin="5,0,5,5" Name="GameNameTextBox"/>
                     </StackPanel>
                 </Button>

@@ -48,6 +48,7 @@ namespace RFU
             regKey.Close();
             var culture = System.Globalization.CultureInfo.CurrentCulture;
             Language = culture.ToString();
+
             SettingsSearch();
             UpdatesChecking();
 
@@ -166,19 +167,9 @@ namespace RFU
             Frame0.Content = AStartPage;
         }
 
-        private void ServersBtn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void MinimBtn_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
-        }
-
-        private void DownloadingBtn_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

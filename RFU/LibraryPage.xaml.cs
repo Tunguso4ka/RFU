@@ -23,12 +23,13 @@ namespace RFU
         string GameName;
 
         public GamePage RandomFightsPage;
-        Uri ImageSource;
+        Uri ImageSourceUri = new Uri(Environment.CurrentDirectory + @"\RandomFights08LogoWhite.png");
         public LibraryPage(string gameName)
         {
             InitializeComponent();
             GameName = gameName;
             GameNameTextBox.Text = GameName;
+            GameImageImage.Source = new BitmapImage(ImageSourceUri);
         }
 
         private void RandomFightsBtn_Click(object sender, RoutedEventArgs e)

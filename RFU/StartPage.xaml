@@ -8,11 +8,12 @@
       d:DesignHeight="520" d:DesignWidth="500"
       Title="StartPage">
 
-    <Grid Background="#185572">
+    <Grid>
         <ScrollViewer>
             <StackPanel Margin="5,5,5,5">
                 <TextBlock Text="Good day!" Style="{StaticResource GPTextBlockWhite}" Name="GDTextBlock"/>
                 <TextBlock Text="Game status" Style="{StaticResource GPTextBlockWhite}" Name="GameStatusTextBlock" Grid.Row="1" FontFamily="Yu Gothic UI Light" TextWrapping="Wrap"/>
+                <InkCanvas Height="150" Width="150" Name="InkCanvas"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>
