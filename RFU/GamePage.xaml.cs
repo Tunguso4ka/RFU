@@ -16,7 +16,8 @@ namespace RFU
     public partial class GamePage : Page
     {
         string GameName;
-        Version GameVersion;
+        Version NewGameVersion;
+        Version ThisGameVersion;
         string FolderPath;
         string GameFolderPath;
         string GamePath;
@@ -28,13 +29,15 @@ namespace RFU
         bool AutoUpdate;
         DirectoryInfo FolderPathDirectory;
 
-        public GamePage(string gameName, Version gameVersion, string gamePath, string gameUpdateUrl, int gameStatus, string language, bool autoUpdate, string gameFolderPath)
+        public GamePage(string gameName, Version newGameVersion, Version thisGameVersion, string gamePath, string gameUpdateUrl, int gameStatus, string language, bool autoUpdate, string gameFolderPath)
         {
             InitializeComponent();
             GameName = gameName;
             GameNameTextBlock.Text = GameName;
-            GameVersion = gameVersion;
-            VersionTextBlock.Text = "Version: " + GameVersion;
+            NewGameVersion = newGameVersion;
+            NewVersionTextBlock.Text = "New version: " + NewGameVersion;
+            ThisGameVersion = thisGameVersion;
+            ThisVersionTextBlock.Text = "This version: " + thisGameVersion;
             GamePath = gamePath;
             GameUpdateUri = gameUpdateUrl;
             GameStatus = gameStatus;
@@ -102,7 +105,7 @@ namespace RFU
                 FolderPathDirectory.Create();
             }
             ZipPath = FolderPath + @"\RandomFights.zip";
-            GamePath = FolderPath + @"\" + GameVersion + @"\RandomFights.exe";
+            GamePath = FolderPath + @"\" + NewGameVersion + @"\RandomFights.exe";
 
             Uri UpdateUri = new Uri(GameUpdateUri);
 
@@ -143,7 +146,7 @@ namespace RFU
                 BinaryWriter BinaryWriter = new BinaryWriter(File.Open(SettingsPath, FileMode.Create));
                 BinaryWriter.Write(Language);
                 BinaryWriter.Write(GameName);
-                BinaryWriter.Write(Convert.ToString(GameVersion));
+                BinaryWriter.Write(Convert.ToString(ThisGameVersion));
                 BinaryWriter.Write(GamePath);
                 BinaryWriter.Write(GameStatus);
                 BinaryWriter.Write(AutoUpdate);
@@ -175,7 +178,7 @@ namespace RFU
             BinaryWriter BinaryWriter = new BinaryWriter(File.Open(SettingsPath, FileMode.Create));
             BinaryWriter.Write(Language);
             BinaryWriter.Write(GameName);
-            BinaryWriter.Write(Convert.ToString(GameVersion));
+            BinaryWriter.Write(Convert.ToString(ThisGameVersion));
             BinaryWriter.Write(GamePath);
             BinaryWriter.Write(GameStatus);
             BinaryWriter.Write(AutoUpdate);

@@ -8,7 +8,7 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="5"/>
-            <Setter Property="Height" Value="25"/>
+            <Setter Property="Height" Value="30"/>
             <Setter Property="Foreground" Value="#076D9C"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">

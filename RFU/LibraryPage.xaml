@@ -13,8 +13,20 @@
             <WrapPanel>
                 <Button Style="{StaticResource ButtonStyleWhiteWithBackground}" Height="Auto" Margin="5" Click="RandomFightsBtn_Click">
                     <StackPanel>
-                        <Image Height="70" Margin="5,5,5,0" Name="GameImageImage"/>
-                        <TextBlock Text="Game Name" Foreground="White" Margin="5,0,5,5" Name="GameNameTextBox"/>
+                        <Image Height="70" Margin="5,5,5,0" Name="RFImage"/>
+                        <TextBlock Text="Game Name" Foreground="White" Margin="5,0,5,5" Name="RFTextBox"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource ButtonStyleWhiteWithBackground}" Height="Auto" Margin="5" Click="ClickerBtn_Click">
+                    <StackPanel>
+                        <Image Height="70" Margin="5,5,5,0" Name="ClickerImage"/>
+                        <TextBlock Text="Game Name" Foreground="White" Margin="5,0,5,5" Name="ClickerTextBox"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource ButtonStyleWhiteWithBackground}" Height="Auto" Margin="5" Click="CalculatorBtn_Click">
+                    <StackPanel>
+                        <Image Height="70" Margin="5,5,5,0" Name="CalculatorImage"/>
+                        <TextBlock Text="Game Name" Foreground="White" Margin="5,0,5,5" Name="CalculatorTextBox"/>
                     </StackPanel>
                 </Button>
             </WrapPanel>

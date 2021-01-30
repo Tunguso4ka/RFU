@@ -24,7 +24,8 @@ namespace RFU
         string Game0Path;
         string Game0UpdateUrl = @"https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1kMrTP1cCcUwDVvQCOYi-7Qs-f9htvpm9";
         string SaveFolderPath;
-        Version Game0Version;
+        Version newGameVersion;
+        Version thisGameVersion;
         int GameStatus;
         Version NewRFUVersion;
         Version OldRFUVersion;
@@ -53,12 +54,11 @@ namespace RFU
             UpdatesChecking();
 
             string gameName = Game0Name, GamePath = Game0Path, GameUpdateUrl = Game0UpdateUrl;
-            Version gameVersion = Game0Version;
 
             AStartPage = new StartPage(GameStatus, Language);
-            ASettingsPage = new SettingsPage(gameName, gameVersion, GamePath, GameUpdateUrl, GameStatus, Language, AutoUpdate, SaveFolderPath);
+            ASettingsPage = new SettingsPage(gameName, thisGameVersion, GamePath, GameUpdateUrl, GameStatus, Language, AutoUpdate, SaveFolderPath);
             ALibraryPage = new LibraryPage(gameName);
-            RandomFightsPage = new GamePage(gameName, gameVersion, GamePath, GameUpdateUrl, GameStatus, Language, AutoUpdate, SaveFolderPath);
+            RandomFightsPage = new GamePage(gameName, newGameVersion, thisGameVersion, GamePath, GameUpdateUrl, GameStatus, Language, AutoUpdate, SaveFolderPath);
 
             Frame0.Content = AStartPage;
         }
@@ -77,7 +77,7 @@ namespace RFU
                     BinaryReader BinaryReader = new BinaryReader(File.OpenRead(SettingsPath));
                     Language = BinaryReader.ReadString();
                     Game0Name = BinaryReader.ReadString();
-                    Game0Version = new Version(BinaryReader.ReadString());
+                    thisGameVersion = new Version(BinaryReader.ReadString());
                     Game0Path = BinaryReader.ReadString();
                     GameStatus = BinaryReader.ReadInt32();
                     AutoUpdate = BinaryReader.ReadBoolean();
@@ -122,7 +122,7 @@ namespace RFU
 
                 using (StreamReader StreamReader = new StreamReader(Game0pdateInfoPath))
                 {
-                    Game0Version = new Version(StreamReader.ReadLine());
+                    newGameVersion = new Version(StreamReader.ReadLine());
                     Game0UpdateUrl = StreamReader.ReadLine();
                     StreamReader.Dispose();
                 }
@@ -131,19 +131,7 @@ namespace RFU
             }
             catch
             {
-                using (StreamReader StreamReader = new StreamReader(RFUUpdateInfoPath))
-                {
-                    NewRFUVersion = new Version(StreamReader.ReadLine());
-                    Game0UpdateInfoUrl = StreamReader.ReadLine();
-                    StreamReader.Dispose();
-                }
 
-                using (StreamReader StreamReader = new StreamReader(Game0pdateInfoPath))
-                {
-                    Game0Version = new Version(StreamReader.ReadLine());
-                    Game0UpdateUrl = StreamReader.ReadLine();
-                    StreamReader.Dispose();
-                }
             }
         }
 
