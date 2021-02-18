@@ -28,6 +28,6 @@
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
-        <Button Content="Save and restart app" Name="SaveBtn" Click="SaveBtn_Click" Style="{StaticResource ButtonStyleWhite}" VerticalAlignment="Bottom"/>
+        <Button Content="Save and restart app" Name="SaveBtn" Click="SaveBtn_Click" Style="{StaticResource ButtonStyleWhite}" VerticalAlignment="Bottom" Width="auto"/>
     </Grid>
 </Page>

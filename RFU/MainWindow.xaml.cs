@@ -1,8 +1,6 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 
@@ -39,14 +37,16 @@ namespace RFU
         public MainWindow()
         {
             InitializeComponent();
+
+            //UpdateCheckerWindow updateCheckerWindow = new UpdateCheckerWindow();
+            //updateCheckerWindow.Show();
+
             if (!Directory.Exists(FolderPath))
             {
                 Directory.CreateDirectory(FolderPath);
             }
 
-            RegistryKey regKey = Registry.CurrentUser.CreateSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run\\");
-            regKey.SetValue("RFUpdater", Assembly.GetExecutingAssembly().Location);
-            regKey.Close();
+            
             var culture = System.Globalization.CultureInfo.CurrentCulture;
             Language = culture.ToString();
 

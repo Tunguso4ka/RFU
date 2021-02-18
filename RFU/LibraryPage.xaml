@@ -9,27 +9,22 @@
       Title="LibraryPage">
 
     <Grid>
-        <StackPanel>
-            <WrapPanel>
-                <Button Style="{StaticResource ButtonStyleWhiteWithBackground}" Height="Auto" Margin="5" Click="RandomFightsBtn_Click">
-                    <StackPanel>
-                        <Image Height="70" Margin="5,5,5,0" Name="RFImage"/>
-                        <TextBlock Text="Game Name" Foreground="White" Margin="5,0,5,5" Name="RFTextBox"/>
-                    </StackPanel>
-                </Button>
-                <Button Style="{StaticResource ButtonStyleWhiteWithBackground}" Height="Auto" Margin="5" Click="ClickerBtn_Click">
-                    <StackPanel>
-                        <Image Height="70" Margin="5,5,5,0" Name="ClickerImage"/>
-                        <TextBlock Text="Game Name" Foreground="White" Margin="5,0,5,5" Name="ClickerTextBox"/>
-                    </StackPanel>
-                </Button>
-                <Button Style="{StaticResource ButtonStyleWhiteWithBackground}" Height="Auto" Margin="5" Click="CalculatorBtn_Click">
-                    <StackPanel>
-                        <Image Height="70" Margin="5,5,5,0" Name="CalculatorImage"/>
-                        <TextBlock Text="Game Name" Foreground="White" Margin="5,0,5,5" Name="CalculatorTextBox"/>
-                    </StackPanel>
-                </Button>
-            </WrapPanel>
-        </StackPanel>
+        <ItemsControl Name="GameItemsControl">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Style="{StaticResource ButtonStyleWhiteWithBackground}" Height="Auto" Width="Auto" Margin="5" Click="AGameBtn_Click" Tag="{Binding BtnTag}">
+                        <StackPanel>
+                            <Image Height="70" Width="70" Margin="5,5,5,0" Name="RFImage" Source="{Binding AGameSource}"/>
+                            <TextBlock Text="{Binding AGameName}" Foreground="White" Margin="5,0,5,5" Name="RFTextBox"/>
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
     </Grid>
 </Page>

@@ -5,32 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RFU"
         mc:Ignorable="d"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
         WindowStyle="None"
         ResizeMode="NoResize"
         AllowsTransparency="True"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
         MouseLeftButtonDown="Window_MouseLeftButtonDown"
-        Title="MainWindow" Height="360" Width="400">
+        Title="Launcher" Height="360" Width="400">
 
     <Grid>
         <Grid Background="#065A82">
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="20"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="1" Background="#FF185572">
                 <Frame Name="Frame0" NavigationUIVisibility="Hidden"/>
             </Grid>
         </Grid>
+        
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Button Content="b" Name="MenuBtn" Click="MenuBtn_Click" Style="{StaticResource ButtonStyleWhite}" Width="40" FontFamily="ashampoo" ToolTipService.ToolTip="Main menu"/>
-            <Button Content="7" Name="GameBtn0" Click="GameBtn0_Click" Style="{StaticResource ButtonStyleWhite}" Width="40" FontFamily="ashampoo" ToolTipService.ToolTip="Game library"/>
-            <Button Content="f" Name="SettingsBtn" Click="SettingsBtn_Click" Style="{StaticResource ButtonStyleWhite}" Width="40" FontFamily="ashampoo" ToolTipService.ToolTip="Settings"/>
+            <Button Content="b" Name="MenuBtn" Click="MenuBtn_Click" Style="{StaticResource ButtonStyleWhite}" FontFamily="ashampoo" ToolTipService.ToolTip="Main menu"/>
+            <Button Content="7" Name="GameBtn0" Click="GameBtn0_Click" Style="{StaticResource ButtonStyleWhite}" FontFamily="ashampoo" ToolTipService.ToolTip="Game library"/>
+            <Button Content="f" Name="SettingsBtn" Click="SettingsBtn_Click" Style="{StaticResource ButtonStyleWhite}" FontFamily="ashampoo" ToolTipService.ToolTip="Settings"/>
         </StackPanel>
+        
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <Button Content="i" x:Name="MinimBtn" Click="MinimBtn_Click" Style="{StaticResource CloseButtonStyleWhite}" Width="40" Height="30" Grid.Column="1" FontSize="16" FontFamily="ashampoo" ToolTipService.ToolTip="Minimize"/>
-            <Button Content="h" x:Name="CloseBtn" Click="CloseBtn_Click" Style="{StaticResource CloseButtonStyleWhite}" Width="40" Height="30" Grid.Column="1" FontSize="16" FontFamily="ashampoo" ToolTipService.ToolTip="Close"/>
+            <Button Content="i" x:Name="MinimBtn" Click="MinimBtn_Click" Style="{StaticResource CloseButtonStyleWhite}" FontFamily="ashampoo" ToolTipService.ToolTip="Minimize"/>
+            <Button Content="h" x:Name="CloseBtn" Click="CloseBtn_Click" Style="{StaticResource CloseButtonStyleWhite}" FontFamily="ashampoo" ToolTipService.ToolTip="Close"/>
         </StackPanel>
+        
     </Grid>
+    
 </Window>
