@@ -1,0 +1,26 @@
+﻿<Page x:Class="RFU.SearchPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RFU"
+      mc:Ignorable="d" 
+      d:DesignHeight="340" d:DesignWidth="400"
+      Title="SearchPage">
+
+    <Grid>
+        <StackPanel>
+            <Separator Margin="0,5"/>
+            <Grid Height="20">
+                <TextBox Width="400" Name="SearchTextBox"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Width="20" Style="{StaticResource ButtonStyleBlack}" Content="" FontFamily="Segoe MDL2 Assets" Name="ClearSearchBtn" Click="ClearSearchBtn_Click"/>
+                    <Button Width="20" Style="{StaticResource ButtonStyleBlack}" Content="" FontFamily="Segoe MDL2 Assets" Name="StartSearchBtn" Click="StartSearchBtn_Click"/>
+                </StackPanel>
+            </Grid>
+            <ScrollViewer Height="320" VerticalScrollBarVisibility="Hidden">
+                
+            </ScrollViewer>
+        </StackPanel>
+    </Grid>
+</Page>

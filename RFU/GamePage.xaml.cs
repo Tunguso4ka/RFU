@@ -19,17 +19,13 @@ namespace RFU
         Version NewGameVersion;
         Version ThisGameVersion;
         string FolderPath;
-        string GameFolderPath;
         string GamePath;
         string ZipPath;
         string GameUpdateUri;
-        int GameStatus;
-        string Language;
         string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\RFUpdater\settings.dat";
-        bool AutoUpdate;
         DirectoryInfo FolderPathDirectory;
 
-        public GamePage(string gameName, Version newGameVersion, Version thisGameVersion, string gamePath, string gameUpdateUrl, int gameStatus, string language, bool autoUpdate, string gameFolderPath)
+        public GamePage(string gameName, Version newGameVersion, Version thisGameVersion, string gamePath, string gameUpdateUrl)
         {
             InitializeComponent();
             GameName = gameName;
@@ -40,28 +36,24 @@ namespace RFU
             ThisVersionTextBlock.Text = "This version: " + thisGameVersion;
             GamePath = gamePath;
             GameUpdateUri = gameUpdateUrl;
-            GameStatus = gameStatus;
-            Language = language;
-            AutoUpdate = autoUpdate;
-            GameFolderPath = gameFolderPath;
-            FolderPath = gameFolderPath + GameName;
+            FolderPath = Properties.Settings.Default.SaveFolderPath + GameName;
             FolderPath = FolderPath.Replace(' ', '_');
             FolderPathDirectory = new DirectoryInfo(FolderPath);
             ProgressBar0.Visibility = Visibility.Hidden;
             DownSpeedTextBlock.Visibility = Visibility.Hidden;
-            if (GameStatus == 0)
+            if (Properties.Settings.Default.GameStatus == 0)
             {
                 StatusTextBlock.Text = "Status: Not installed.";
                 InstallBtn.Content = "⬇💾Install";
                 DeleteBtn.Visibility = Visibility.Hidden;
             }
-            else if (GameStatus == 1)
+            else if (Properties.Settings.Default.GameStatus == 1)
             {
                 StatusTextBlock.Text = "Status: Installed.";
                 InstallBtn.Content = "🎮Play";
                 DeleteBtn.Visibility = Visibility.Visible;
             }
-            else if (GameStatus == 2)
+            else if (Properties.Settings.Default.GameStatus == 2)
             {
                 StatusTextBlock.Text = "Status: Update found.";
                 InstallBtn.Content = "🆕Update";
@@ -74,13 +66,13 @@ namespace RFU
             Install();
         }
 
-        async void Install()
+        void Install()
         {
-            if (GameStatus == 0)
+            if (Properties.Settings.Default.GameStatus == 0)
             {
                 Installing();
             }
-            else if (GameStatus == 1)
+            else if (Properties.Settings.Default.GameStatus == 1)
             {
                 if (File.Exists(GamePath))
                 {
@@ -91,7 +83,7 @@ namespace RFU
                     DeleteGame();
                 }
             }
-            else if (GameStatus == 2)
+            else if (Properties.Settings.Default.GameStatus == 2)
             {
 
             }
@@ -99,6 +91,7 @@ namespace RFU
 
         void Installing()
         {
+            Properties.Settings.Default.Installing = true;
             WebClient WebClient = new WebClient();
             if (!FolderPathDirectory.Exists)
             {
@@ -132,7 +125,7 @@ namespace RFU
             }
             else
             {
-                GameStatus = 1;
+                Properties.Settings.Default.GameStatus = 1;
                 StatusTextBlock.Text = "Status: Installed.";
                 InstallBtn.Content = "🎮Play";
                 InstallBtn.Visibility = Visibility.Visible;
@@ -144,15 +137,16 @@ namespace RFU
                 File.Delete(ZipPath);
 
                 BinaryWriter BinaryWriter = new BinaryWriter(File.Open(SettingsPath, FileMode.Create));
-                BinaryWriter.Write(Language);
+                BinaryWriter.Write(Properties.Settings.Default.UpdaterLanguage);
                 BinaryWriter.Write(GameName);
                 BinaryWriter.Write(Convert.ToString(ThisGameVersion));
                 BinaryWriter.Write(GamePath);
-                BinaryWriter.Write(GameStatus);
-                BinaryWriter.Write(AutoUpdate);
-                BinaryWriter.Write(GameFolderPath);
+                BinaryWriter.Write(Properties.Settings.Default.GameStatus);
+                BinaryWriter.Write(Properties.Settings.Default.AutoUpdate);
+                BinaryWriter.Write(Properties.Settings.Default.SaveFolderPath);
                 BinaryWriter.Dispose();
             }
+            Properties.Settings.Default.Installing = false;
         }
 
 
@@ -170,19 +164,19 @@ namespace RFU
         }
         void DeleteGame()
         {
-            GameStatus = 0;
+            Properties.Settings.Default.GameStatus = 0;
             StatusTextBlock.Text = "Status: Not installed.";
             InstallBtn.Content = "⬇💾Install";
             DeleteBtn.Visibility = Visibility.Hidden;
 
             BinaryWriter BinaryWriter = new BinaryWriter(File.Open(SettingsPath, FileMode.Create));
-            BinaryWriter.Write(Language);
+            BinaryWriter.Write(Properties.Settings.Default.UpdaterLanguage);
             BinaryWriter.Write(GameName);
             BinaryWriter.Write(Convert.ToString(ThisGameVersion));
             BinaryWriter.Write(GamePath);
-            BinaryWriter.Write(GameStatus);
-            BinaryWriter.Write(AutoUpdate);
-            BinaryWriter.Write(GameFolderPath);
+            BinaryWriter.Write(Properties.Settings.Default.GameStatus);
+            BinaryWriter.Write(Properties.Settings.Default.AutoUpdate);
+            BinaryWriter.Write(Properties.Settings.Default.SaveFolderPath);
             BinaryWriter.Dispose();
         }
     }

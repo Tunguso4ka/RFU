@@ -28,7 +28,7 @@ namespace RFU
             {
                 InfoBarText = "Error. Cant set registry key.";
             }
-            InfoBarTextBlock.Text = InfoBarText;
+            //InfoBarTextBlock.Text = InfoBarText;
 
             this.Hide();
         }

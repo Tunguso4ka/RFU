@@ -15,25 +15,27 @@
         Title="Launcher" Height="360" Width="400">
 
     <Grid>
-        <Grid Background="#065A82">
+        <Grid Background="#FF0E2530">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="1" Background="#FF185572">
+            <Grid Grid.Row="1" Background="#FF0A3246">
                 <Frame Name="Frame0" NavigationUIVisibility="Hidden"/>
             </Grid>
         </Grid>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Button Content="b" Name="MenuBtn" Click="MenuBtn_Click" Style="{StaticResource ButtonStyleWhite}" FontFamily="ashampoo" ToolTipService.ToolTip="Main menu"/>
-            <Button Content="7" Name="GameBtn0" Click="GameBtn0_Click" Style="{StaticResource ButtonStyleWhite}" FontFamily="ashampoo" ToolTipService.ToolTip="Game library"/>
-            <Button Content="f" Name="SettingsBtn" Click="SettingsBtn_Click" Style="{StaticResource ButtonStyleWhite}" FontFamily="ashampoo" ToolTipService.ToolTip="Settings"/>
+            <Button Content="" Name="MenuBtn" Click="MenuBtn_Click" Style="{StaticResource ButtonStyleWhite}" FontFamily="Segoe MDL2 Assets" ToolTipService.ToolTip="Menu"/>
+            <Button Content="" x:Name="SearchBtn" Click="SearchBtn_Click" Style="{StaticResource ButtonStyleWhite}" FontFamily="Segoe MDL2 Assets" ToolTipService.ToolTip="Search"/>
+            <Button Content="" Name="LibraryBtn" Click="LibraryBtn_Click" Style="{StaticResource ButtonStyleWhite}" FontFamily="Segoe MDL2 Assets" ToolTipService.ToolTip="Your games"/>
+            <Button Content="" Name="SettingsBtn" Click="SettingsBtn_Click" Style="{StaticResource ButtonStyleWhite}" FontFamily="Segoe MDL2 Assets" ToolTipService.ToolTip="Settings"/>
         </StackPanel>
-        
+
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <Button Content="i" x:Name="MinimBtn" Click="MinimBtn_Click" Style="{StaticResource CloseButtonStyleWhite}" FontFamily="ashampoo" ToolTipService.ToolTip="Minimize"/>
-            <Button Content="h" x:Name="CloseBtn" Click="CloseBtn_Click" Style="{StaticResource CloseButtonStyleWhite}" FontFamily="ashampoo" ToolTipService.ToolTip="Close"/>
+            <Button Content="" x:Name="UserBtn" Click="UserBtn_Click" Style="{StaticResource ButtonStyleWhite}" FontFamily="Segoe MDL2 Assets" ToolTipService.ToolTip="Authorize"/>
+            <Button Content="" x:Name="MinimBtn" Click="MinimBtn_Click" Style="{StaticResource CloseButtonStyleWhite}" FontFamily="Segoe MDL2 Assets" ToolTipService.ToolTip="Minimize"/>
+            <Button Content="" x:Name="CloseBtn" Click="CloseBtn_Click" Style="{StaticResource CloseButtonStyleWhite}" FontFamily="Segoe MDL2 Assets" ToolTipService.ToolTip="Close"/>
         </StackPanel>
         
     </Grid>

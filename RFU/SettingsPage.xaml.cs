@@ -10,25 +10,21 @@ namespace RFU
     /// </summary>
     public partial class SettingsPage : Page
     {
+        AboutWindow AboutWindow = new AboutWindow();
         string GameName;
         Version GameVersion;
         string GamePath;
         string GameUpdateUrl;
-        int GameStatus;
-        string Language;
         string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\RFUpdater\settings.dat";
-        string SaveFolderPath;
-        bool AutoUpdate;
-        public SettingsPage(string gameName, Version gameVersion, string gamePath, string gameUpdateUrl, int gameStatus, string language, bool autoUpdate, string saveFolderPath)
+        bool LogOutPressed;
+        public SettingsPage(string gameName, Version gameVersion, string gamePath, string gameUpdateUrl)
         {
             InitializeComponent();
             GameName = gameName;
             GameVersion = gameVersion;
             GamePath = gamePath;
             GameUpdateUrl = gameUpdateUrl;
-            GameStatus = gameStatus;
-            Language = language;
-            if (Language == "en-EN")
+            if (Properties.Settings.Default.UpdaterLanguage == "en")
             {
                 LRB0.IsChecked = true;
             }
@@ -36,13 +32,11 @@ namespace RFU
             {
                 LRB1.IsChecked = true;
             }
-            AutoUpdate = autoUpdate;
-            if (AutoUpdate == true)
+            if (Properties.Settings.Default.AutoUpdate == true)
             {
                 CB0.IsChecked = true;
             }
-            SaveFolderPath = saveFolderPath;
-            if (SaveFolderPath == @"C:\Games\")
+            if (Properties.Settings.Default.SaveFolderPath == @"C:\Games\")
             {
                 LRB2.IsChecked = true;
             }
@@ -50,49 +44,87 @@ namespace RFU
             {
                 LRB3.IsChecked = true;
             }
+            if(Properties.Settings.Default.ThemeNum == 0)
+            {
+                LRB6.IsChecked = true;
+            }
+            else if (Properties.Settings.Default.ThemeNum == 1)
+            {
+                LRB4.IsChecked = true;
+            }
+            else
+            {
+                LRB5.IsChecked = true;
+            }
+            if(Properties.Settings.Default.UserAuthorizited == false)
+            {
+                LogOutBtn.IsEnabled = false;
+            }
         }
 
         private void SaveBtn_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             if (LRB0.IsChecked == true)
             {
-                Language = "en-EN";
+                Properties.Settings.Default.UpdaterLanguage = "en";
             }
             else
             {
-                Language = "ru-RU";
+                Properties.Settings.Default.UpdaterLanguage = "ru";
             }
 
             if (CB0.IsChecked == true)
             {
-                AutoUpdate = true;
+                Properties.Settings.Default.AutoUpdate = true;
             }
             else
             {
-                AutoUpdate = false;
+                Properties.Settings.Default.AutoUpdate = false;
             }
 
             if (LRB2.IsChecked == true)
             {
-                SaveFolderPath = @"C:\Games\";
+                Properties.Settings.Default.SaveFolderPath = @"C:\Games\";
             }
             else
             {
-                SaveFolderPath = @"D:\Games\";
+                Properties.Settings.Default.SaveFolderPath = @"D:\Games\";
             }
 
             BinaryWriter BinaryWriter = new BinaryWriter(File.Open(SettingsPath, FileMode.Create));
-            BinaryWriter.Write(Language);
+            BinaryWriter.Write(Properties.Settings.Default.UpdaterLanguage);
             BinaryWriter.Write(GameName);
             BinaryWriter.Write(Convert.ToString(GameVersion));
             BinaryWriter.Write(GamePath);
-            BinaryWriter.Write(GameStatus);
-            BinaryWriter.Write(AutoUpdate);
-            BinaryWriter.Write(SaveFolderPath);
+            BinaryWriter.Write(Properties.Settings.Default.GameStatus);
+            BinaryWriter.Write(Properties.Settings.Default.AutoUpdate);
+            BinaryWriter.Write(Properties.Settings.Default.SaveFolderPath);
             BinaryWriter.Dispose();
+            Properties.Settings.Default.Save();
 
             new MainWindow().Show();
             Window.GetWindow(this).Close();
+        }
+
+        private void LogOutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (LogOutPressed == true)
+            {
+                Properties.Settings.Default.UserAuthorizited = true;
+                LogOutBtn.Content = "Log out";
+                LogOutPressed = false;
+            }
+            else
+            {
+                Properties.Settings.Default.UserAuthorizited = false;
+                LogOutBtn.Content = "Cancel";
+                LogOutPressed = true;
+            }
+        }
+
+        private void AboutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            AboutWindow.Show();
         }
     }
 }

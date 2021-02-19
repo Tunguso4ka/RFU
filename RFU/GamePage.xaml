@@ -25,7 +25,10 @@
                 <ProgressBar Value="0" Name="ProgressBar0"/>
                 <StackPanel Orientation="Horizontal">
                     <Button Content="Install" Name="InstallBtn" Style="{StaticResource ButtonStyleWhite}" Click="InstallBtn_Click" Width="100"/>
-                    <Button Content="🗑" Name="DeleteBtn" Style="{StaticResource ButtonStyleWhite}" Click="DeleteBtn_Click" Width="40"/>
+                    <Button Content="" Name="DeleteBtn" Style="{StaticResource ButtonStyleWhite}" FontFamily="Segoe MDL2 Assets" Click="DeleteBtn_Click" Width="40"/>
+                    <Separator Margin="5,0"/>
+                    <Button Content="" Name="LikeBtn" Style="{StaticResource ButtonStyleWhite}" FontFamily="Segoe MDL2 Assets" Click="DeleteBtn_Click" Width="40"/>
+                    <Button Content="" Name="DisLikeBtn" Style="{StaticResource ButtonStyleWhite}" FontFamily="Segoe MDL2 Assets" Click="DeleteBtn_Click" Width="40"/>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
