@@ -25,5 +25,22 @@ namespace RFU
 
             }
         }
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (SearchTextBox.Text != "")
+            {
+                ClearSearchBtn.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ClearSearchBtn.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void AGameBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

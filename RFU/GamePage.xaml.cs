@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Net;
 using System.Windows.Controls;
@@ -22,10 +21,12 @@ namespace RFU
         string GamePath;
         string ZipPath;
         string GameUpdateUri;
-        string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\RFUpdater\settings.dat";
+        string SettingsPath = Properties.Settings.Default.AppDataPath + "gamesonthispc.dat";
+        int GameStatus;
+        int ATag;
         DirectoryInfo FolderPathDirectory;
 
-        public GamePage(string gameName, Version newGameVersion, Version thisGameVersion, string gamePath, string gameUpdateUrl)
+        public GamePage(string gameName, Version newGameVersion, Version thisGameVersion, string gamePath, string gameUpdateUrl, int gameStatus, int tag)
         {
             InitializeComponent();
             GameName = gameName;
@@ -36,29 +37,35 @@ namespace RFU
             ThisVersionTextBlock.Text = "This version: " + thisGameVersion;
             GamePath = gamePath;
             GameUpdateUri = gameUpdateUrl;
+            GameStatus = gameStatus;
+            ATag = tag;
+
             FolderPath = Properties.Settings.Default.SaveFolderPath + GameName;
             FolderPath = FolderPath.Replace(' ', '_');
             FolderPathDirectory = new DirectoryInfo(FolderPath);
             ProgressBar0.Visibility = Visibility.Hidden;
             DownSpeedTextBlock.Visibility = Visibility.Hidden;
-            if (Properties.Settings.Default.GameStatus == 0)
+
+            if (GameStatus == 0)
             {
                 StatusTextBlock.Text = "Status: Not installed.";
                 InstallBtn.Content = "⬇💾Install";
                 DeleteBtn.Visibility = Visibility.Hidden;
             }
-            else if (Properties.Settings.Default.GameStatus == 1)
+            else if (GameStatus == 1)
             {
                 StatusTextBlock.Text = "Status: Installed.";
                 InstallBtn.Content = "🎮Play";
                 DeleteBtn.Visibility = Visibility.Visible;
             }
-            else if (Properties.Settings.Default.GameStatus == 2)
+            else if (GameStatus == 2)
             {
                 StatusTextBlock.Text = "Status: Update found.";
                 InstallBtn.Content = "🆕Update";
                 DeleteBtn.Visibility = Visibility.Visible;
             }
+
+            //MessageBox.Show("" + GameUpdateUri);
         }
 
         private void InstallBtn_Click(object sender, RoutedEventArgs e)
@@ -70,6 +77,7 @@ namespace RFU
         {
             if (Properties.Settings.Default.GameStatus == 0)
             {
+                MessageBox.Show("Installing");
                 Installing();
             }
             else if (Properties.Settings.Default.GameStatus == 1)
@@ -101,7 +109,6 @@ namespace RFU
             GamePath = FolderPath + @"\" + NewGameVersion + @"\RandomFights.exe";
 
             Uri UpdateUri = new Uri(GameUpdateUri);
-
             WebClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
             WebClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
             WebClient.DownloadFileAsync(UpdateUri, ZipPath);
@@ -125,28 +132,45 @@ namespace RFU
             }
             else
             {
-                Properties.Settings.Default.GameStatus = 1;
-                StatusTextBlock.Text = "Status: Installed.";
-                InstallBtn.Content = "🎮Play";
-                InstallBtn.Visibility = Visibility.Visible;
-                DeleteBtn.Visibility = Visibility.Visible;
-                ProgressBar0.Visibility = Visibility.Hidden;
-                DownSpeedTextBlock.Visibility = Visibility.Hidden;
+                try
+                {
+                    MessageBox.Show("Complete");
 
-                ZipFile.ExtractToDirectory(ZipPath, FolderPath);
-                File.Delete(ZipPath);
+                    Properties.Settings.Default.GameStatus = 1;
+                    StatusTextBlock.Text = "Status: Installed.";
+                    InstallBtn.Content = "🎮Play";
+                    InstallBtn.Visibility = Visibility.Visible;
+                    DeleteBtn.Visibility = Visibility.Visible;
+                    ProgressBar0.Visibility = Visibility.Hidden;
+                    DownSpeedTextBlock.Visibility = Visibility.Hidden;
 
-                BinaryWriter BinaryWriter = new BinaryWriter(File.Open(SettingsPath, FileMode.Create));
-                BinaryWriter.Write(Properties.Settings.Default.UpdaterLanguage);
-                BinaryWriter.Write(GameName);
-                BinaryWriter.Write(Convert.ToString(ThisGameVersion));
-                BinaryWriter.Write(GamePath);
-                BinaryWriter.Write(Properties.Settings.Default.GameStatus);
-                BinaryWriter.Write(Properties.Settings.Default.AutoUpdate);
-                BinaryWriter.Write(Properties.Settings.Default.SaveFolderPath);
-                BinaryWriter.Dispose();
+                    ZipFile.ExtractToDirectory(ZipPath, FolderPath);
+                    File.Delete(ZipPath);
+
+                    BinaryWriter BinaryWriter = new BinaryWriter(File.Open(SettingsPath, FileMode.Create));
+                    int i = 0;
+                    while (i != 99)
+                    {
+                        if (i == ATag)
+                        {
+                            BinaryWriter.Write(NewGameVersion + "}" + GamePath);
+                        }
+                        else
+                        {
+                            BinaryWriter.Write(((MainWindow)Window.GetWindow(this)).SavedGamesVersions[i] + "}" + ((MainWindow)Window.GetWindow(this)).SavedGamesPaths[i]);
+                        }
+                        i++;
+                    }
+                    //MessageBox.Show(((MainWindow)Window.GetWindow(this)).SavedGamesVersions[0] + "}" + ((MainWindow)Window.GetWindow(this)).SavedGamesPaths[0]);
+                    BinaryWriter.Dispose();
+                }
+                catch
+                {
+                    MessageBox.Show("Error: Can't download this app, try later.", "Error");
+                }
             }
             Properties.Settings.Default.Installing = false;
+            Properties.Settings.Default.Save();
         }
 
 
@@ -170,14 +194,30 @@ namespace RFU
             DeleteBtn.Visibility = Visibility.Hidden;
 
             BinaryWriter BinaryWriter = new BinaryWriter(File.Open(SettingsPath, FileMode.Create));
-            BinaryWriter.Write(Properties.Settings.Default.UpdaterLanguage);
-            BinaryWriter.Write(GameName);
-            BinaryWriter.Write(Convert.ToString(ThisGameVersion));
-            BinaryWriter.Write(GamePath);
-            BinaryWriter.Write(Properties.Settings.Default.GameStatus);
-            BinaryWriter.Write(Properties.Settings.Default.AutoUpdate);
-            BinaryWriter.Write(Properties.Settings.Default.SaveFolderPath);
+            int i = 0;
+            while (i != 99)
+            {
+                if (i == ATag)
+                {
+                    BinaryWriter.Write("" + "}" + "");
+                }
+                else
+                {
+                    BinaryWriter.Write(((MainWindow)Window.GetWindow(this)).SavedGamesVersions[i] + "}" + ((MainWindow)Window.GetWindow(this)).SavedGamesPaths[i]);
+                }
+                i++;
+            }
             BinaryWriter.Dispose();
+        }
+
+        private void LikeBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DisLikeBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

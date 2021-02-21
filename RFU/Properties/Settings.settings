@@ -6,7 +6,7 @@
       <Value Profile="(Default)">en</Value>
     </Setting>
     <Setting Name="ThemeNum" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="Installing" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -28,6 +28,12 @@
     </Setting>
     <Setting Name="UserName" Type="System.String" Scope="User">
       <Value Profile="(Default)">TSF</Value>
+    </Setting>
+    <Setting Name="AppDataPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SavedGamesIsReal" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

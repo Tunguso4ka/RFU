@@ -12,7 +12,10 @@
         Title="AboutWindow" Height="200" Width="300">
     <Grid Background="#FF0A3246">
         <StackPanel VerticalAlignment="Bottom">
-            <Image Source="favicon (2).ico" Width="32" Height="32" VerticalAlignment="Top"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Style="{StaticResource GPTextBlockWhite}" Text="RFU" VerticalAlignment="Center" FontSize="24" Name="AppNameTextBlock"/>
+                <TextBlock Style="{StaticResource GPTextBlockWhite}" Text="by Kira Kosova" VerticalAlignment="Center" FontSize="8"/>
+            </StackPanel>
             <TextBox Name="AboutTextBox" Height="150" Foreground="White" Background="Transparent" IsReadOnly="True" BorderBrush="Transparent"/>
         </StackPanel>
         <Button Content="" x:Name="CloseBtn" Click="CloseBtn_Click" Style="{StaticResource CloseButtonStyleWhite}" FontFamily="Segoe MDL2 Assets" ToolTipService.ToolTip="Close" VerticalAlignment="Top" HorizontalAlignment="Right"/>

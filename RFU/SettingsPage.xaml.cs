@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace RFU
 {
@@ -11,19 +12,16 @@ namespace RFU
     public partial class SettingsPage : Page
     {
         AboutWindow AboutWindow = new AboutWindow();
-        string GameName;
-        Version GameVersion;
-        string GamePath;
-        string GameUpdateUrl;
         string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\RFUpdater\settings.dat";
         bool LogOutPressed;
-        public SettingsPage(string gameName, Version gameVersion, string gamePath, string gameUpdateUrl)
+        public SettingsPage()
         {
             InitializeComponent();
-            GameName = gameName;
-            GameVersion = gameVersion;
-            GamePath = gamePath;
-            GameUpdateUrl = gameUpdateUrl;
+            CheckAndSet();
+        }
+
+        void CheckAndSet()
+        {
             if (Properties.Settings.Default.UpdaterLanguage == "en")
             {
                 LRB0.IsChecked = true;
@@ -44,26 +42,28 @@ namespace RFU
             {
                 LRB3.IsChecked = true;
             }
-            if(Properties.Settings.Default.ThemeNum == 0)
-            {
-                LRB6.IsChecked = true;
-            }
-            else if (Properties.Settings.Default.ThemeNum == 1)
+            if (Properties.Settings.Default.ThemeNum == 0)
             {
                 LRB4.IsChecked = true;
             }
-            else
+            else if (Properties.Settings.Default.ThemeNum == 1)
             {
                 LRB5.IsChecked = true;
             }
-            if(Properties.Settings.Default.UserAuthorizited == false)
+            else
             {
+                LRB6.IsChecked = true;
+            }
+            if (Properties.Settings.Default.UserAuthorizited == false)
+            {
+                LogOutBtn.Foreground = Brushes.DarkGray;
                 LogOutBtn.IsEnabled = false;
             }
         }
 
-        private void SaveBtn_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
+            //language
             if (LRB0.IsChecked == true)
             {
                 Properties.Settings.Default.UpdaterLanguage = "en";
@@ -73,6 +73,7 @@ namespace RFU
                 Properties.Settings.Default.UpdaterLanguage = "ru";
             }
 
+            //autoupdate
             if (CB0.IsChecked == true)
             {
                 Properties.Settings.Default.AutoUpdate = true;
@@ -82,6 +83,7 @@ namespace RFU
                 Properties.Settings.Default.AutoUpdate = false;
             }
 
+            //folder
             if (LRB2.IsChecked == true)
             {
                 Properties.Settings.Default.SaveFolderPath = @"C:\Games\";
@@ -91,17 +93,24 @@ namespace RFU
                 Properties.Settings.Default.SaveFolderPath = @"D:\Games\";
             }
 
-            BinaryWriter BinaryWriter = new BinaryWriter(File.Open(SettingsPath, FileMode.Create));
-            BinaryWriter.Write(Properties.Settings.Default.UpdaterLanguage);
-            BinaryWriter.Write(GameName);
-            BinaryWriter.Write(Convert.ToString(GameVersion));
-            BinaryWriter.Write(GamePath);
-            BinaryWriter.Write(Properties.Settings.Default.GameStatus);
-            BinaryWriter.Write(Properties.Settings.Default.AutoUpdate);
-            BinaryWriter.Write(Properties.Settings.Default.SaveFolderPath);
-            BinaryWriter.Dispose();
+            //themes
+            if (LRB4.IsChecked == true)
+            {
+                Properties.Settings.Default.ThemeNum = 0;
+            }
+            else if (LRB5.IsChecked == true)
+            {
+                Properties.Settings.Default.ThemeNum = 1;
+            }
+            else
+            {
+                Properties.Settings.Default.ThemeNum = 2;
+            }
+
+            //save
             Properties.Settings.Default.Save();
 
+            //restart app
             new MainWindow().Show();
             Window.GetWindow(this).Close();
         }

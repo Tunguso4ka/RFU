@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace RFU
 {
@@ -11,17 +12,10 @@ namespace RFU
     /// </summary>
     public partial class MainWindow : Window
     {
-        string FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\RFUpdater\";
-        string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\RFUpdater\settings.dat";
+        string SettingsPath;
+        string DownGamesPath;
         string RFUUpdateInfoUrl = @"https://drive.google.com/uc?export=download&id=1oKyTppE7V8E-Q0UF0_SXNmW3diQ0QbLJ";
-        string RFUUpdateInfoPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\RFUpdater\RFUV.txt";
-        string Game0pdateInfoPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\RFUpdater\RFV.txt";
-        string Game0UpdateInfoUrl = @"https://drive.google.com/uc?export=download&id=1-vMmTTLHl7z3O-cAMD_ubUeW1WJyL5ID";
-        string Game0Name;
-        string Game0Path;
-        string Game0UpdateUrl = @"https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1kMrTP1cCcUwDVvQCOYi-7Qs-f9htvpm9";
-        Version newGameVersion;
-        Version thisGameVersion;
+        string RFUUpdateInfoPath;
         Version NewRFUVersion;
 
         //pages
@@ -30,24 +24,28 @@ namespace RFU
         public LibraryPage ALibraryPage;
         public SearchPage ASearchPage;
         public UserPage AUserPage;
-        public GamePage RandomFightsPage;
         public LoginPage ALoginPage;
 
 
         //ints
 
-        //strings
+        //strings[]
+        public string[] SavedGamesVersions = new string[99];
+        public string[] SavedGamesPaths = new string[99];
 
         public MainWindow()
         {
             InitializeComponent();
 
+            Properties.Settings.Default.AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\RFUpdater\";
+            Properties.Settings.Default.Save();
+
             //UpdateCheckerWindow updateCheckerWindow = new UpdateCheckerWindow();
             //updateCheckerWindow.Show();
 
-            if (!Directory.Exists(FolderPath))
+            if (!Directory.Exists(Properties.Settings.Default.AppDataPath))
             {
-                Directory.CreateDirectory(FolderPath);
+                Directory.CreateDirectory(Properties.Settings.Default.AppDataPath);
             }
 
             Checks();
@@ -63,53 +61,55 @@ namespace RFU
 
         void Pages()
         {
-            string gameName = Game0Name, GamePath = Game0Path, GameUpdateUrl = Game0UpdateUrl;
-
             AStartPage = new StartPage();
-            ASettingsPage = new SettingsPage(gameName, thisGameVersion, GamePath, GameUpdateUrl);
-            ALibraryPage = new LibraryPage(gameName);
+            ASettingsPage = new SettingsPage();
+            ALibraryPage = new LibraryPage();
             ASearchPage = new SearchPage();
             AUserPage = new UserPage();
             ALoginPage = new LoginPage();
-
-            RandomFightsPage = new GamePage(gameName, newGameVersion, thisGameVersion, GamePath, GameUpdateUrl);
         }
-
         void Checks()
         {
+            StringsSet();
             SettingsSearch();
             UpdatesChecking();
             BetaCheck();
             AuthorizCheck();
+            ThemeSet();
         }
 
         void SettingsSearch()
         {
-            if (File.Exists(SettingsPath))
+            if (File.Exists(DownGamesPath))
             {
                 try
                 {
-                    BinaryReader BinaryReader = new BinaryReader(File.OpenRead(SettingsPath));
-                    Properties.Settings.Default.UpdaterLanguage = BinaryReader.ReadString();
-                    Game0Name = BinaryReader.ReadString();
-                    thisGameVersion = new Version(BinaryReader.ReadString());
-                    Game0Path = BinaryReader.ReadString();
-                    Properties.Settings.Default.GameStatus = BinaryReader.ReadInt32();
-                    Properties.Settings.Default.AutoUpdate = BinaryReader.ReadBoolean();
-                    Properties.Settings.Default.SaveFolderPath = BinaryReader.ReadString();
+                    BinaryReader BinaryReader = new BinaryReader(File.OpenRead(DownGamesPath));
+                    string Line;
+                    string[] LineList;
+                    int LineNum = 0;
+                    while (BinaryReader.PeekChar() > -1)
+                    {
+                        Line = BinaryReader.ReadString();
+                        LineList = Line.Split('}');
+                        SavedGamesVersions[LineNum] = LineList[0];
+                        SavedGamesPaths[LineNum] = LineList[1];
+                        LineNum++;
+                    }
                     BinaryReader.Dispose();
+
+                    //MessageBox.Show(((MainWindow)Window.GetWindow(this)).SavedGamesVersions[0] + "}" + ((MainWindow)Window.GetWindow(this)).SavedGamesPaths[0]);
+
+                    Properties.Settings.Default.SavedGamesIsReal = true;
                 }
                 catch
                 {
-                    Game0Name = "Random Fights";
-                    Properties.Settings.Default.GameStatus = 0;
+                    Properties.Settings.Default.SavedGamesIsReal = false;
                 }
             }
             else
             {
-                Game0Name = "Random Fights";
-                Game0Path = "";
-                Properties.Settings.Default.GameStatus = 0;
+                Properties.Settings.Default.SavedGamesIsReal = false;
             }
 
         }
@@ -121,10 +121,6 @@ namespace RFU
                 {
                     File.Delete(RFUUpdateInfoPath);
                 }
-                if (File.Exists(Game0pdateInfoPath))
-                {
-                    File.Delete(Game0pdateInfoPath);
-                }
                 WebClient WebClient = new WebClient();
                 WebClient.DownloadFile(RFUUpdateInfoUrl, RFUUpdateInfoPath);
                 using (StreamReader StreamReader = new StreamReader(RFUUpdateInfoPath))
@@ -133,36 +129,39 @@ namespace RFU
                     StreamReader.Dispose();
                 }
                 File.Delete(RFUUpdateInfoPath);
-                WebClient.DownloadFile(Game0UpdateInfoUrl, Game0pdateInfoPath);
-
-                using (StreamReader StreamReader = new StreamReader(Game0pdateInfoPath))
-                {
-                    newGameVersion = new Version(StreamReader.ReadLine());
-                    Game0UpdateUrl = StreamReader.ReadLine();
-                    StreamReader.Dispose();
-                }
-                File.Delete(Game0pdateInfoPath);
-
             }
             catch
             {
 
             }
         }
-
         void BetaCheck()
         {
             //Properties.Settings.Default.IsBetaOn
         }
-
         void AuthorizCheck()
         {
             //Properties.Settings.Default.UserAuthorizited
-            if(Properties.Settings.Default.UserAuthorizited == true)
+            if (Properties.Settings.Default.UserAuthorizited == true)
             {
                 UserBtn.Content = "";
                 UserBtn.ToolTip = Properties.Settings.Default.UserName;
             }
+        }
+        void ThemeSet()
+        {
+            if (Properties.Settings.Default.ThemeNum == 0)
+            {
+                FirstGrid.Background = new SolidColorBrush(Color.FromRgb(6, 90, 130));
+                SecondGrid.Background = new SolidColorBrush(Color.FromRgb(24, 85, 114));
+            }
+        }
+        void StringsSet()
+        {
+            //Properties.Settings.Default.AppDataPath
+            SettingsPath = Properties.Settings.Default.AppDataPath + "settings.dat";
+            RFUUpdateInfoPath = Properties.Settings.Default.AppDataPath + "RFUV.txt";
+            DownGamesPath = Properties.Settings.Default.AppDataPath + "gamesonthispc.dat";
         }
 
         private void SettingsBtn_Click(object sender, RoutedEventArgs e)
@@ -177,7 +176,7 @@ namespace RFU
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(Properties.Settings.Default.Installing == false)
+            if (Properties.Settings.Default.Installing == false)
             {
                 this.Close();
             }
@@ -199,7 +198,7 @@ namespace RFU
 
         private void UserBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(Properties.Settings.Default.UserAuthorizited == true)
+            if (Properties.Settings.Default.UserAuthorizited == true)
             {
                 Frame0.Content = AUserPage;
             }

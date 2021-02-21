@@ -10,7 +10,7 @@ namespace RFU
     /// </summary>
     public partial class UpdateCheckerWindow : Window
     {
-        string InfoBarText;
+        string InfoBarText = "";
         public UpdateCheckerWindow()
         {
             InitializeComponent();

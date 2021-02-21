@@ -37,7 +37,7 @@ namespace RFU.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int ThemeNum {
             get {
                 return ((int)(this["ThemeNum"]));
@@ -128,6 +128,30 @@ namespace RFU.Properties {
             }
             set {
                 this["UserName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AppDataPath {
+            get {
+                return ((string)(this["AppDataPath"]));
+            }
+            set {
+                this["AppDataPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SavedGamesIsReal {
+            get {
+                return ((bool)(this["SavedGamesIsReal"]));
+            }
+            set {
+                this["SavedGamesIsReal"] = value;
             }
         }
     }

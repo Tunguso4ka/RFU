@@ -38,7 +38,7 @@
                     <Separator Margin="3,0"/>
                     <RadioButton Content="Dark" Name="LRB5" Foreground="White"/>
                     <Separator Margin="3,0"/>
-                    <RadioButton Content="Standart Blue" Name="LRB6" Foreground="White"/>
+                    <RadioButton Content="Standart Blue" Name="LRB6" Foreground="White" IsEnabled="False"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                     <Button Content="Log out" Style="{StaticResource CloseButtonStyleWhite}" Name="LogOutBtn" Click="LogOutBtn_Click" Width="100"/>
