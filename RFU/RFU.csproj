@@ -13,6 +13,9 @@
     <Authors>Kira Kosova</Authors>
     <ApplicationIcon>favicon (2).ico</ApplicationIcon>
     <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>napfis.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
 
