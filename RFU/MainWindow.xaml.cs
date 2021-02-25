@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -47,11 +49,7 @@ namespace RFU
             {
                 Directory.CreateDirectory(Properties.Settings.Default.AppDataPath);
             }
-
             Checks();
-            Pages();
-
-            Frame0.Content = AStartPage;
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -70,12 +68,15 @@ namespace RFU
         }
         void Checks()
         {
+
             StringsSet();
             SettingsSearch();
             UpdatesChecking();
             BetaCheck();
             AuthorizCheck();
             ThemeSet();
+            Pages();
+            Frame0.Content = AStartPage;
         }
 
         void SettingsSearch()
@@ -212,5 +213,6 @@ namespace RFU
         {
             Frame0.Content = ASearchPage;
         }
+        
     }
 }

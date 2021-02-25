@@ -15,7 +15,7 @@
                     <Button Style="{StaticResource ButtonStyleWhiteWithBackground}" Height="Auto" Width="Auto" Margin="5" Click="AGameBtn_Click" Tag="{Binding BtnTag}">
                         <StackPanel>
                             <Image Height="70" Width="70" Margin="5,5,5,0" Name="RFImage" Source="{Binding AGameSource}"/>
-                            <TextBlock Text="{Binding AGameName}" Foreground="White" Margin="5,0,5,5" Name="RFTextBox"/>
+                            <TextBlock Text="{Binding AGameName}" Foreground="White" Margin="5,0,5,5" Name="RFTextBox" FontFamily="{DynamicResource IBMPlexLight}"/>
                         </StackPanel>
                     </Button>
                 </DataTemplate>

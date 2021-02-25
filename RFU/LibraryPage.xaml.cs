@@ -13,7 +13,7 @@ namespace RFU
     public partial class LibraryPage : Page
     {
         WebClient webClient = new WebClient();
-
+        public List<GameData> ListWithGameData = new List<GameData>();
         Uri GameListFileUri = new Uri("https://drive.google.com/uc?id=1QzOoLrQKW48salKmltEPDAis2Rd_GFz9", UriKind.RelativeOrAbsolute);
         string GameListFilePath;
         string[] GamesNamesList = new string[99];
@@ -39,7 +39,6 @@ namespace RFU
                 webClient.DownloadFile(GameListFileUri, GameListFilePath);
                 using (StreamReader StreamReader = new StreamReader(GameListFilePath))
                 {
-                    List<GameData> ListWithGameData = new List<GameData>();
                     int LineNum = 0;
                     string[] LineList;
                     string line;

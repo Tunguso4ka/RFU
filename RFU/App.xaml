@@ -110,5 +110,7 @@
         <Style TargetType="Separator">
             <Setter Property="Background" Value="Transparent"/>
         </Style>
+
+        <FontFamily x:Key="IBMPlexLight">\IBMPlexSans-Light.ttf</FontFamily>
     </Application.Resources>
 </Application>

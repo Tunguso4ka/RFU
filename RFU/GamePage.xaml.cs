@@ -24,6 +24,7 @@ namespace RFU
         string SettingsPath = Properties.Settings.Default.AppDataPath + "gamesonthispc.dat";
         int GameStatus;
         int ATag;
+        int ThisUserLikeNum = 0;
         DirectoryInfo FolderPathDirectory;
 
         public GamePage(string gameName, Version newGameVersion, Version thisGameVersion, string gamePath, string gameUpdateUrl, int gameStatus, int tag)
@@ -50,18 +51,21 @@ namespace RFU
             {
                 StatusTextBlock.Text = "Status: Not installed.";
                 InstallBtn.Content = "⬇💾Install";
+                InstallBtn.ToolTip = "Install";
                 DeleteBtn.Visibility = Visibility.Hidden;
             }
             else if (GameStatus == 1)
             {
                 StatusTextBlock.Text = "Status: Installed.";
                 InstallBtn.Content = "🎮Play";
+                InstallBtn.ToolTip = "Play";
                 DeleteBtn.Visibility = Visibility.Visible;
             }
             else if (GameStatus == 2)
             {
                 StatusTextBlock.Text = "Status: Update found.";
                 InstallBtn.Content = "🆕Update";
+                InstallBtn.ToolTip = "Update";
                 DeleteBtn.Visibility = Visibility.Visible;
             }
 
@@ -212,12 +216,32 @@ namespace RFU
 
         private void LikeBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            //like  
+            ThisUserLikeNum = 1;
+            LikeBtn.Content = "";
+            DisLikeBtn.Content = "";
         }
 
         private void DisLikeBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            //dislike 
+            ThisUserLikeNum = 2;
+            LikeBtn.Content = "";
+            DisLikeBtn.Content = "";
+        }
+        //
+        private void GameInfoHideBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if(GameInfoStackPanel.Visibility == Visibility.Collapsed)
+            {
+                GameInfoStackPanel.Visibility = Visibility.Visible;
+                GameInfoHideBtn.ToolTip = "Hide info";
+            }
+            else
+            {
+                GameInfoStackPanel.Visibility = Visibility.Collapsed;
+                GameInfoHideBtn.ToolTip = "Show info";
+            }
         }
     }
 }

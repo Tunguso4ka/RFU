@@ -22,7 +22,7 @@ namespace RFU
         {
             if (SearchTextBox.Text != "")
             {
-
+                
             }
         }
 
@@ -31,6 +31,13 @@ namespace RFU
             if (SearchTextBox.Text != "")
             {
                 ClearSearchBtn.Visibility = Visibility.Visible;
+                for(int i = 0; i < 99; i++)
+                {
+                    //if(((MainWindow)Window.GetWindow(this)).GamesNamesList[i].Contains(SearchTextBox.Text, System.StringComparison.OrdinalIgnoreCase))
+                    //{
+
+                    //}
+                }
             }
             else
             {
